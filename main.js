@@ -1,11 +1,19 @@
 var canvas = document.querySelector('#canvas');
 var context = canvas.getContext('2d');
 
+
+
+
 var xPos = 0;
 var yPos = 0;
 
 context.rect(xPos, yPos, 50, 50);
 context.stroke();
+context.beginPath();
+   context.moveTo(0, 100);
+     context.lineTo(canvas.width,100);
+   context.stroke();
+
 
 
 function move(e){
@@ -28,8 +36,15 @@ function move(e){
 	}
 	
 	canvas.width = canvas.width;
+	context.beginPath();
+   context.moveTo(0, 100);
+     context.lineTo(canvas.width,100);
+   context.stroke();
+   
+   // creates the rectangle to move around
 	context.rect(xPos, yPos, 50, 50);
 	context.stroke();
 }
+
 
 document.onkeydown = move;
