@@ -3,7 +3,7 @@ var context = canvas.getContext('2d');
 
 
 
-// hello world
+// hello worlds
 var xPos = 0;
 var yPos = 0;
 	// creates rectangle to move around
