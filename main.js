@@ -3,16 +3,17 @@ var context = canvas.getContext('2d');
 
 
 
-
+// hello world
 var xPos = 0;
 var yPos = 0;
-
-context.rect(xPos, yPos, 50, 50);
-context.stroke();
-context.beginPath();
-   context.moveTo(0, 100);
-     context.lineTo(canvas.width,100);
-   context.stroke();
+	// creates rectangle to move around
+	
+	context.rect(xPos, yPos, 50, 50);
+	context.stroke();
+	context.beginPath();
+    context.moveTo(0, 100);
+    context.lineTo(canvas.width,100);
+    context.stroke();
 
 
 
@@ -34,12 +35,16 @@ function move(e){
 	else if(e.keyCode == 40) { //Down arrow key
 		yPos +=5;
 	}
-	
+	/* creates a line boundary so that 
+	the health bar and stats go on top
+	*/
 	canvas.width = canvas.width;
 	context.beginPath();
-   context.moveTo(0, 100);
-     context.lineTo(canvas.width,100);
-   context.stroke();
+	// coordinates where line starts
+    context.moveTo(0, 75);
+    // cordinates where ilne end
+    context.lineTo(canvas.width,75);
+    context.stroke();
    
    // creates the rectangle to move around
 	context.rect(xPos, yPos, 50, 50);
