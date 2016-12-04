@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <meta charset="utf-8">
-<title>Canvas</title>
+<title>RUN</title>
 <style>
 
 
@@ -9,8 +9,9 @@
 	outline: 1px solid #000;
 }
 
-#healthBar {
-	display:block
+#score{
+	outline: 1px solid #000;
+	background: #00ace6;
 }
 
 <p id="time"> </style>
@@ -19,11 +20,9 @@
 </head>
 <body>
 
-<span id="date_time"></span>
-
-<canvas id="healthBar" height="70" width="700"></canvas>
+<canvas style="display:block" id="score" height="70" width="700"></canvas>
 <canvas id="canvas" height="500" width="700"></canvas>
-//<canvas id ="enemy" height = "500" width "700" > </canvas>
+
 
 <script src ='main.js'></script>
 <script type="text/javascript">window.onload = myFunction();</script>

@@ -1,14 +1,18 @@
 var canvas = document.querySelector('#canvas');
-var canvas2 = document.getElementById('healthBar');
+var canvas2 = document.querySelector('#score');
 //var canvas3 = document.querySelector('enemy');
 
 var context = canvas.getContext('2d');
 var context2 = canvas2.getContext('2d');
-//var context3 = canvas3.getContext('2d');
+
+// amount of enemies
+enemyCount = 10;
+health = 3;
 
 /* Canvas height/width */
 cHeight = 500;
 cWidth = 700;
+
 
 
 /* Player's initial position (bottom center) */
@@ -28,9 +32,18 @@ context2.stroke();
 context.rect(xPos, yPos, 50, 50); //Draw the second canvas (main game)
 context.stroke();
 
-/* Randomly generate enemy */
-var enemy = function(id, x, y, width, height){
-		this.id = id;
+// player class 
+var player = function( x, y, width, height){
+		
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;	
+	}
+	/*
+
+/* enemy is a constructor */
+var enemy = function( x, y, width, height){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -52,10 +65,19 @@ var enemy = function(id, x, y, width, height){
 		var y = Math.random() * cHeight;
 		var height = 10 + Math.random() * 30;
 		var width = Math.random() * 30;
-		var id = Math.random();
-		return new enemy(id, x, y, width, height);
+		
+		return new enemy(x, y, width, height);
 	}
-	var enemy = generateRandomEnemy();
+	var player = new player(325,450,25,25)
+	var enemyList = [];
+	
+	for(var i = 0; i < enemyCount; i++) { 
+		//to put elements inside array, use push
+		// to remove elements, use pop
+		enemyList.push(generateRandomEnemy());
+		
+	}
+	
 	
 	
 	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
@@ -64,13 +86,33 @@ var enemy = function(id, x, y, width, height){
 	
 	
 	setInterval(function() {
-
-	enemy.x += enemy.xDir;
-	enemy.y += enemy.yDir;
-	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
-	context.stroke();
+	// clears the canvas and won't leave the trail for the enemy
+	canvas.width = canvas.width;
 	
-	},100)
+	for(var i = 0; i < enemyCount; i++) {
+	if(enemyList[i].x >650) { 
+		enemyList[i].xDir= -enemyList[i].xDir;
+	}
+	if(enemyList[i].x< 0) { 
+		enemyList[i].xDir= -enemyList[i].xDir;
+	}
+	if(enemyList[i].y >450) { 
+		enemyList[i].yDir= -enemyList[i].yDir;
+	}
+	if(enemyList[i].y <0) { 
+		enemyList[i].yDir= -enemyList[i].yDir;
+	}
+	enemyList[i].x += enemyList[i].xDir;
+	enemyList[i].y += enemyList[i].yDir;
+
+	context.rect(enemyList[i].x, enemyList[i].y, enemyList[i].width, enemyList[i].height);
+	context.stroke();
+	}
+	context.rect(player.x, player.y, 50, 50);
+	context.stroke();
+
+	
+	},50)
 
 
 
@@ -81,24 +123,24 @@ function move(e){
 	//alert(e.keyCode);
 
 	if(e.keyCode == 39){ //Right arrow key
-		//console.log(`xPos: ${xPos}\n`);
-		if (xPos < 650) xPos +=5; 
+		if (player.x < 650) player.x +=10; 
 	}
 	else if(e.keyCode == 37) { //Left arrow key
-		if (xPos > 0) xPos -=5;
+		if (player.x > 0) player.x -=10;
 	}
 
 	if(e.keyCode == 38) { //Up arrow key
 		//if (yPos > 100) yPos -= 5;
-		if (yPos > 0) yPos -= 5;
+		if (player.y > 0) player.y -= 10;
 	}
 	else if(e.keyCode == 40) { //Down arrow key
-		if (yPos < 450) yPos +=5;
+		if (player.y < 450) player.y +=10;
 	}
 	
-	canvas.width = canvas.width;
+	/*canvas.width = canvas.width;
 	context.rect(xPos, yPos, 50, 50);
 	context.stroke();
+	*/
 }
 
 //Score Counter
@@ -115,7 +157,8 @@ setInterval(function(){
 	{
 		canvas2.width = canvas2.width;
 		context2.font="20px Arial";
-		context2.fillText(`Score: ${score}`, 5 ,50)
+		// to write onto top canvas, do this
+		context2.fillText(`Score: ${score}		Health: ${health}`, 5 ,50);
 		context2.rect(0, 0, 700, 70);
 		context2.stroke();
 	}
