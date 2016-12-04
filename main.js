@@ -46,8 +46,8 @@ var enemy = function(id, x, y, width, height){
 	  }
 	}
 	
-	//enemyList[id] = enemy2;
-	//generateRandomEnemy is a class generator since I'm returning an instance of enemy
+
+
 var generateRandomEnemy = function() { 
 	var x = Math.random() * cWidth;
 	var y = Math.random() * cHeight;
@@ -61,14 +61,30 @@ var enemy = generateRandomEnemy();
 context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
 context.stroke();
 	
-	
-	
+
+	//Moves enemy
 setInterval(function() {
+	if(enemy.x >650) { 
+		enemy.xDir= -enemy.xDir;
+	}
+	if(enemy.x < 0) { 
+		enemy.xDir= -enemy.xDir;
+	}
+	if(enemy.y >500) { 
+		enemy.yDir= -enemy.yDir;
+	}
+	if(enemy.y <0) { 
+		enemy.yDir= -enemy.yDir;
+	}
 	enemy.x += enemy.xDir;
 	enemy.y += enemy.yDir;
+	// clears the canvas and won't leave the trail for the enemy
+	canvas.width = canvas.width;
 	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
 	context.stroke();
-},100)
+	context.rect(xPos, yPos, 50, 50);
+	context.stroke();
+},50)
 
 
 //Moves player
@@ -78,24 +94,21 @@ function move(e){
 
 	if(e.keyCode == 39){ //Right arrow key
 		//console.log(`xPos: ${xPos}\n`);
-		if (xPos < 650) xPos +=5; 
+		if (xPos < 650) xPos +=10; 
 	}
 	else if(e.keyCode == 37) { //Left arrow key
-		if (xPos > 0) xPos -=5;
+		if (xPos > 0) xPos -=10;
 	}
 
 	if(e.keyCode == 38) { //Up arrow key
 		//if (yPos > 100) yPos -= 5;
-		if (yPos > 0) yPos -= 5;
+		if (yPos > 0) yPos -= 10;
 	}
 	else if(e.keyCode == 40) { //Down arrow key
-		if (yPos < 450) yPos +=5;
+		if (yPos < 450) yPos +=10;
 	}
-	
-	canvas.width = canvas.width;
-	context.rect(xPos, yPos, 50, 50);
-	context.stroke();
 }
+
 
 //Score Counter
 function myFunction() {
