@@ -1,5 +1,7 @@
 var canvas = document.querySelector('#canvas');
-var canvas2 = document.getElementById('healthBar');
+var canvas2 = document.querySelector('#score');
+
+
 var context = canvas.getContext('2d');
 var context2 = canvas2.getContext('2d');
 
@@ -18,12 +20,14 @@ var gameOver = 0; //-1 if game is over.
 
 
 /* Scoreboard */
-context2.rect(0, 0, 700, 70); //Draw the top canvas (score)
-context2.stroke();
+//context2.rect(0, 0, 700, 70); //Draw the top canvas (score)
+//context2.stroke();
 
-/*Main game screen */
-context.rect(xPos, yPos, 50, 50); //Draw the second canvas (main game)
+/*Player Square*/
+context.rect(xPos, yPos, 50, 50); 
 context.stroke();
+
+
 
 /* Randomly generate enemy */
 var enemy = function(id, x, y, width, height){
@@ -32,28 +36,42 @@ var enemy = function(id, x, y, width, height){
 		this.y = y;
 		this.width = width;
 		this.height = height;	
+		this.xDir = Math.random() * 10;
+	    this.yDir = Math.random() * 10;
+	    if(Math.random() <= .5) { 
+			this.xDir = -this.xDir;
+		}
+	  if(Math.random() <=.5) { 
+			this.yDir = -this.yDir;
+	  }
 	}
 	
 	//enemyList[id] = enemy2;
 	//generateRandomEnemy is a class generator since I'm returning an instance of enemy
-	var generateRandomEnemy = function() { 
-		var x = Math.random() * cWidth;
-		var y = Math.random() * cHeight;
-		var height = 10 + Math.random() * 30;
-		var width = Math.random() * 30;
-		var id = Math.random();
-		return new enemy(id, x, y, width, height);
-	}
-	var enemy = generateRandomEnemy();
+var generateRandomEnemy = function() { 
+	var x = Math.random() * cWidth;
+	var y = Math.random() * cHeight;
+	var height = 10 + Math.random() * 30;
+	var width = Math.random() * 30;
+	var id = Math.random();
+	return new enemy(id, x, y, width, height);
+}
+var enemy = generateRandomEnemy();
 	
-	console.log(enemy);
+context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
+context.stroke();
+	
+	
+	
+setInterval(function() {
+	enemy.x += enemy.xDir;
+	enemy.y += enemy.yDir;
 	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
 	context.stroke();
+},100)
 
 
-
-
-
+//Moves player
 function move(e){
 
 	//alert(e.keyCode);
@@ -88,6 +106,7 @@ function alertFunc() {
     score++;
 }
 
+//Scoreboard
 setInterval(function(){
 	if (gameOver == 0)
 	{
