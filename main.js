@@ -3,18 +3,55 @@ var canvas2 = document.getElementById('healthBar');
 var context = canvas.getContext('2d');
 var context2 = canvas2.getContext('2d');
 
+/* Canvas height/width */
+cHeight = 500;
+cWidth = 700;
+
+
+/* Player's initial position (bottom center) */
 var xPos = 325;
 var yPos = 450;
-var gameOver = 0; //-1 if game is over.
 
 var score = 0;
+var gameOver = 0; //-1 if game is over.
 
 
+
+/* Scoreboard */
 context2.rect(0, 0, 700, 70); //Draw the top canvas (score)
 context2.stroke();
 
+/*Main game screen */
 context.rect(xPos, yPos, 50, 50); //Draw the second canvas (main game)
 context.stroke();
+
+/* Randomly generate enemy */
+var enemy = function(id, x, y, width, height){
+		this.id = id;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;	
+	}
+	
+	//enemyList[id] = enemy2;
+	//generateRandomEnemy is a class generator since I'm returning an instance of enemy
+	var generateRandomEnemy = function() { 
+		var x = Math.random() * cWidth;
+		var y = Math.random() * cHeight;
+		var height = 10 + Math.random() * 30;
+		var width = Math.random() * 30;
+		var id = Math.random();
+		return new enemy(id, x, y, width, height);
+	}
+	var enemy = generateRandomEnemy();
+	
+	console.log(enemy);
+	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
+	context.stroke();
+
+
+
 
 
 function move(e){
@@ -42,9 +79,7 @@ function move(e){
 	context.stroke();
 }
 
-//*****NEW****
-//Scorekeeper
-
+//Score Counter
 function myFunction() {
 	if (gameOver == 0) setInterval(alertFunc, 500);
 }
@@ -52,7 +87,6 @@ function myFunction() {
 function alertFunc() {
     score++;
 }
-//*****NEW****
 
 setInterval(function(){
 	if (gameOver == 0)
@@ -70,8 +104,9 @@ setInterval(function(){
 		context2.rect(0, 0, 700, 70);
 		context2.stroke();
 	}
-
-
 }, 100);
+
+
+
 
 document.onkeydown = move;
