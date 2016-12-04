@@ -1,7 +1,10 @@
 var canvas = document.querySelector('#canvas');
 var canvas2 = document.getElementById('healthBar');
+//var canvas3 = document.querySelector('enemy');
+
 var context = canvas.getContext('2d');
 var context2 = canvas2.getContext('2d');
+//var context3 = canvas3.getContext('2d');
 
 /* Canvas height/width */
 cHeight = 500;
@@ -32,6 +35,14 @@ var enemy = function(id, x, y, width, height){
 		this.y = y;
 		this.width = width;
 		this.height = height;	
+		this.xDir = Math.random() * 10;
+	    this.yDir = Math.random() * 10;
+	    if(Math.random() <= .5) { 
+			this.xDir = -this.xDir;
+		}
+	  if(Math.random() <=.5) { 
+			this.yDir = -this.yDir;
+	  }
 	}
 	
 	//enemyList[id] = enemy2;
@@ -46,9 +57,20 @@ var enemy = function(id, x, y, width, height){
 	}
 	var enemy = generateRandomEnemy();
 	
-	console.log(enemy);
+	
 	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
 	context.stroke();
+	
+	
+	
+	setInterval(function() {
+
+	enemy.x += enemy.xDir;
+	enemy.y += enemy.yDir;
+	context.rect(enemy.x, enemy.y, enemy.width, enemy.height);
+	context.stroke();
+	
+	},100)
 
 
 
