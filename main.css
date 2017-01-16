@@ -1,4 +1,18 @@
+#test{
+	width:200px;
+	height:200px;
+	text-align: center;
+	transform: translateY(-350px);	
+	margin-left: 250px;
+	display: none;
 
+
+}
+
+#test2 {
+	margin-top: 50%;
+
+}
 .top { 
 	outline: 1px solid #000;
 	display: block;
@@ -10,4 +24,29 @@
   }	
  ]
 
+#hit{
+	animation-name: test;
+	animation-duration: 4s;
+	animation-fill-mode: forwards;
+
+}
+@keyframes test {
+	0% {
+		opacity: 1;
+	}
+	25% {
+		opacity: .5;
+	}
+	50%{
+		opacity: 1;
+	}
+	75%
+	{
+		opacity: .5;
+	}
+	100%{
+		opacity: 1;
+	}
+
+}
 
